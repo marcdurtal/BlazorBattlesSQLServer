@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using BlazorBattlesSQLServer.Server.Data;
 
 namespace BlazorBattlesSQLServer.Server
 {
@@ -23,6 +25,8 @@ namespace BlazorBattlesSQLServer.Server
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddDbContext<DataContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("DBConnection")));
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
