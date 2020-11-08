@@ -12,7 +12,7 @@ namespace BlazorBattlesSQLServer.Client
     {
         public override Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-            //return Task.FromResult(new AuthenticationState(new ClaimsPrincipal()));
+            return Task.FromResult(new AuthenticationState(new ClaimsPrincipal()));
             var identity = new ClaimsIdentity(
                 new[]
                 {
