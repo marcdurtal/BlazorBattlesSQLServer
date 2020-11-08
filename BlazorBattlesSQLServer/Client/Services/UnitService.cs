@@ -20,6 +20,8 @@ namespace BlazorBattlesSQLServer.Client.Services
         {
             Unit unit = Units.First(unit => unit.Id == unitId);
             MyUnits.Add(new UserUnit { UnitId = unit.Id, HitPoints = unit.HitPoints });
+
+
         }
     }
 }
