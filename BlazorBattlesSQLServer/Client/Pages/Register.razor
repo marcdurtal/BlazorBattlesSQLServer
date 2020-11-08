@@ -63,4 +63,8 @@
     {
         NavigationManager.NavigateTo("login");
     }
+    protected override async Task OnInitializedAsync()
+    {
+        await UnitService.LoadUnitsAsync();
+    }
 }

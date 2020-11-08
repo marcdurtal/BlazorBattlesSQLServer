@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using Blazored.Toast.Services;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Net.Http;
+using System.Net.Http.Json;
 
 namespace BlazorBattlesSQLServer.Client.Services
 {
@@ -11,20 +13,19 @@ namespace BlazorBattlesSQLServer.Client.Services
     {
 
         private readonly IToastService _toastService;
+        private readonly HttpClient _http;
 
-        public UnitService(IToastService toastService)
+
+        public UnitService(IToastService toastService, HttpClient http)
         {
             _toastService = toastService;
+            _http = http;
         }
 
 
-        public IList<Unit> Units { get; } = new List<Unit> {
-            new Unit { Id = 1, Title = "Knight", Attack = 10, Defense = 10, BananaCost = 100 },
-            new Unit { Id = 2, Title = "Archer", Attack = 15, Defense = 5, BananaCost = 150 },
-            new Unit { Id = 3, Title = "Mage", Attack = 20, Defense = 1, BananaCost = 200 }
-        };
-
+        public IList<Unit> Units { get; set; } = new List<Unit>();
         public IList<UserUnit> MyUnits { get; set; } = new List<UserUnit>();
+
 
         public void AddUnit(int unitId)
         {
@@ -32,7 +33,14 @@ namespace BlazorBattlesSQLServer.Client.Services
             MyUnits.Add(new UserUnit { UnitId = unit.Id, HitPoints = unit.HitPoints });
             _toastService.ShowSuccess($"Your {unit.Title} has been built!", "Unit built!");
 
+        }
 
+        public async Task LoadUnitsAsync()
+        {
+            if (Units.Count == 0)
+            {
+                Units = await _http.GetFromJsonAsync<IList<Unit>>("api/unit");
+            }
         }
     }
 }

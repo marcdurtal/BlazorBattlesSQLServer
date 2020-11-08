@@ -45,4 +45,9 @@
 
         needMoreBananas = false;
     }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await UnitService.LoadUnitsAsync();
+    }
 }
