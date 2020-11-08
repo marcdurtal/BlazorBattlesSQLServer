@@ -1,6 +1,7 @@
 ﻿using BlazorBattlesSQLServer.Shared;
 using System;
 using System.Collections.Generic;
+using Blazored.Toast.Services;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,6 +9,15 @@ namespace BlazorBattlesSQLServer.Client.Services
 {
     public class UnitService : IUnitService
     {
+
+        private readonly IToastService _toastService;
+
+        public UnitService(IToastService toastService)
+        {
+            _toastService = toastService;
+        }
+
+
         public IList<Unit> Units { get; } = new List<Unit> {
             new Unit { Id = 1, Title = "Knight", Attack = 10, Defense = 10, BananaCost = 100 },
             new Unit { Id = 2, Title = "Archer", Attack = 15, Defense = 5, BananaCost = 150 },
@@ -20,6 +30,7 @@ namespace BlazorBattlesSQLServer.Client.Services
         {
             Unit unit = Units.First(unit => unit.Id == unitId);
             MyUnits.Add(new UserUnit { UnitId = unit.Id, HitPoints = unit.HitPoints });
+            _toastService.ShowSuccess($"Your {unit.Title} has been built!", "Unit built!");
 
 
         }
