@@ -1,6 +1,7 @@
 ﻿@page "/build"
 @inject BlazorBattlesSQLServer.Client.Services.IBananaService BananaService
 @inject BlazorBattlesSQLServer.Client.Services.IUnitService UnitService
+@inject IToastService ToastService
 
 <h3>Build</h3>
 
@@ -15,8 +16,17 @@
 
 <button @onclick="BuildUnit" class="btn btn-primary">Build</button>
 
+@if (needMoreBananas)
+{
+    <div class="validation-message">
+        Not enough bananas! :(
+    </div>
+}
+
 @code {
     int selectedUnitId = 1;
+
+    bool needMoreBananas = false;
 
     public void BuildUnit()
     {
@@ -24,5 +34,14 @@
         UnitService.Units.FirstOrDefault(unit => unit.Id == selectedUnitId);
         BananaService.EatBananas(selectedUnit.BananaCost);
         UnitService.AddUnit(selectedUnitId);
+
+        if (BananaService.Bananas < selectedUnit.BananaCost)
+        {
+            needMoreBananas = true;
+            ToastService.ShowError("Not enough bananas!", ":(");
+            return;
+        }
+
+        needMoreBananas = false;
     }
 }
