@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
 
-namespace BlazorBattles.Shared
+namespace BlazorBattlesSQLServer.Shared
 {
     public class UserRegister
     {
