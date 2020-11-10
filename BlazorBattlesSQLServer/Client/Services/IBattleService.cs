@@ -9,5 +9,6 @@ namespace BlazorBattlesSQLServer.Client.Services
     public interface IBattleService
     {
         Task<BattleResult> StartBattle(int opponentId);
+        BattleResult LastBattle { get; set; }
     }
 }
