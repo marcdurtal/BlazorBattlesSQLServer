@@ -11,6 +11,8 @@ using BlazorBattlesSQLServer.Server.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using BlazorBattlesSQLServer.Server.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace BlazorBattlesSQLServer.Server
 {
@@ -44,6 +46,9 @@ namespace BlazorBattlesSQLServer.Server
                         ValidateAudience = false
                     };
                 });
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IUtilityService, UtilityService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
